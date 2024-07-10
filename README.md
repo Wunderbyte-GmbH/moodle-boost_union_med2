@@ -1,199 +1,202 @@
-Offline Quiz Module
-===================
+moodle-theme_boost_union_med2
+==============================
 
-This file is part of the mod_offlinequiz plugin for Moodle - <http://moodle.org/>
+[![Moodle Plugin CI](https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_med2/workflows/Moodle%20Plugin%20CI/badge.svg?branch=master)](https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_med2/actions?query=workflow%3A%22Moodle+Plugin+CI%22+branch%3Amaster)
 
-*Author:*    Thomas Wedekind, Juergen Zimmer, Richard Rode, Alexander Heher, Adrian Czermak
-
-*Copyright:* 2014 [Academic Moodle Cooperation](http://www.academic-moodle-cooperation.org)
-
-*License:*   [GNU GPL v3 or later](http://www.gnu.org/copyleft/gpl.html)
+Boost Union Med2 Child is a boilerplate for enhancing Boost Union with custom or local functionality.
 
 
-Description
------------
+Motivation for this plugin
+--------------------------
 
-The MC Offline Quiz module adds paper-and-pencil multiple-choice quizzes to Moodle. In offline
-quizzes students mark answers to questions on a sheet of paper (the answer form). The students'
-answer forms are evaluated and graded automatically by the offline quiz module.
+If you ever wanted to benefit from all the / only the Boost Union features you need, but you also had to realize additional local features or settings at the same time, do not look further: Boost Union Med2 Child is your friend.
 
-More precisely, a complete offline quiz consists (at least) of the following steps:
+With Boost Union Med2 Child, it is quite easy to create a grandchild theme of Boost Union. It will save you the time-consuming and headache-triggering first steps to create a grandchild theme, allowing you to start directly with the implementation of your local features.
 
-* A teacher creates an offline quiz in Moodle and adds multiple-choice questions, all-or-nothing
-  multiple-choice questions or description questions (text) to the quiz. This is very similar to
-  creating online quizzes (standard Moodle quizzes).
-
-* From the question lists the teacher creates question sheets and answer forms as PDF (DOCX, LaTeX)
-  documents using the module.
-
-* The question sheets and answer forms are handed out to students for the actual quiz. The students
-  mark the answers they think are correct in the answer form.
-
-* The teacher scans the filled-in answer forms and uploads the resulting images into the offline
-  quiz. The scanned answer forms are evaluated and graded automatically by the module.
-
-* If necessary, the teacher corrects errors that might have occurred due to mistakes made by the
-  students or due to bad scan quality.
-
-After results have been created in an offline quiz, students can review their result as usual. If
-the teacher allows it, students can also see the scanned answer forms and which markings have been
-recognised as crosses.
-
-The module supports up to six groups which are not related to Moodle course groups. Each group can
-contain a different set of questions in a different order. Separate question sheets and answer
-forms are created for the different offline quiz groups.
-
-The module also supports lists of participants which are useful for checking which students
-actually took part in the exam. Lists of participants are pre-filled with students in Moodle. PDF
-versions of those lists can be created in the module for easy marking during the exam. The marked
-lists can be uploaded and evaluated automatically.
-
-Furthermore you can use the Offline Quiz Cron plugin (report_offlinequizcron), which adds an interface to the Offline Quiz activity (mod_offlinequiz) to inspect and change pending cronjobs for the Offline Quiz.
-
-- https://moodle.org/plugins/report_offlinequizcron
-- https://github.com/academic-moodle-cooperation/moodle-report_offlinequizcron
-
-
-Example
--------
-
-The Offline Quiz module is used intensively at different Austrian universities for mass exams.
-Hundreds of students can be easily examined at the same time (given enough seating space in lecture
-halls) without the need for expensive e-testing equipment.
+But please note: While Boost Union Med2 Child will surely help you to realize all your local Boost Union dreams, please do yourself and the whole community a favour and verify that your planned features are indeed not interesting as a pull request or feature request for the whole Boost Union community and could be contributed to Boost Union directly instead.
 
 
 Requirements
 ------------
 
-The plugin is available for Moodle 2.5+.
+Boost Union Med2 Child does not have a real requirement for a particular Boost Union or Moodle core release.
 
-You need to have imagemagick and the relating php module (http://pecl.php.net/package/imagick) installed.
-It is used for converting the uploaded answer sheets.
-
-If you want to use LaTeX formulas in the questions it is necessary to have LaTeX installed.
-See https://www.latex-project.org/get/ for more information how to install it.
-You can set your latex path in the admin settings at:
-Plugins -> Filters -> Manage filters -> TeX Notation -> Settings
-Everything should work if the "pathconvert" has a tick symbol.
+The code which you find in this repository is more or less release-agnostic. It is meant to be used in conjunction with the latest Boost Union release which goes with your Moodle core release.
 
 
 Installation
 ------------
 
-* Copy the module code directly to the mod/offlinequiz directory.
+Install Boost Union Med2 Child like any other plugin to folder
+/theme/boost_union_med2
 
-* Log into Moodle as administrator.
-
-* Open the administration area (http://your-moodle-site/admin) to start the installation
-  automatically.
+See http://docs.moodle.org/en/Installing_plugins for details on installing Moodle plugins
 
 
-Cron Job
---------
+Usage
+-----
 
-The plugin uses a cron job for evaluating the answer forms. If you didn't configure the offline-quiz
-cron job, the automated analysis of answer forms is not going work! Information about how to
-configure cron jobs can be found at https://docs.moodle.org/en/Cron
+After installing Boost Union Med2 Child, it does not do anything to Moodle or Boost Union yet.
 
-Before Version 3.2 there was an additional cron job required. This cron job is no longer necessary,
-unless you intend to run the cron job on a separate server.
+Boost Union Med2 Child integrates into the Boost Union settings as an additional settings page which you find on:
+Site administration -> Appearance -> Boost Union -> Boost Union Med2 Child.
 
-Since the evaluation of answer forms usually takes a lot of system resources, it is recommended to
-run this cron job on a separate application server to take load from the frontend servers.
+There, you find some settings:
 
-If you want to run the cron job on a dedicated server you have to disable it in the moodle settings
-and create an additional job on the dedicated server looking like this:
+### Settings page "Boost Union Med2 Child"
 
-    */10 * * * * DATE=`date +\%Y\%m\%d`; php <your moodle root dir>/admin/cli/scheduled_task.php --execute="\mod_offlinequiz\task\page_evaluation_task" >> /var/log/moodle/cron-olq.log.$DATE 2>&1
+#### Tab "General settings"
 
+In this tab there are the following settings:
 
-Admin Settings
---------------
+##### Pre SCSS inheritance
 
-In the website admin settings for the module
+With this setting, you control if the pre SCSS code from Boost Union should be inherited or duplicated.
 
-_Site Administration -> Plugins -> Activity modules -> Offline Quiz_
+Most of the time, inheriting will be perfectly fine. However, it may happen that imperfect code is integrated into Boost Union which prevents simple SCSS inheritance for particular Boost Union features. If you encounter any issues with Boost Union features which seem not to work in Boost Union Med2 Child as well, try to switch this setting to 'Dupliate' and, if this solves the problem, report an issue on Github (see the 'Bug and problem reports' section below for details how to report an issue).
 
-One can choose the default settings for the module and also determine the University Logo that will
-appear on the top of the answer forms:
+##### Extra SCSS inheritance
 
-* formula for participant identification (text field)
-* mix questions (checkbox)
-* mix answers (checkbox)
-* logo URL (text field)
-* copyright indication (checkbox)
-* settings for exam inspection (checkbox)
-* decimal places (drop down)
-* paper's white level (drop down)
-* 1-click inscription (checkbox)
-* role for inscription (drop down)
-* saving days (text field)
+With this setting, you control if the extra SCSS code from Boost Union should be inherited or duplicated.
 
-The user identification has to be set to a formula describing how the user IDs
-can be retrieved from the digits marked by the students on the answer forms. For example:
-
-A user identification formula
-
-    a[7]=username
-
-means that the students mark a 7 digit number on the answer form. A concatenation of the letter 'a'
-and that number denotes the 'username' of the user in Moodle's 'user' table.
-
-A formula
-
-    b[5]cd=idnumber
-
-means that the students mark a 5 digit number on the answer form. A concatenation of the letter
-'b', the marked number, and the string 'cd' denotes the 'idnumber' of the user in Moodle's 'user'
-table.
+The reason behind this setting is the same as for the 'Pre SCSS inheritance' setting.
 
 
-Scanning of Answer Forms
-------------------------
+Building your local theme with this boilerplate
+-----------------------------------------------
 
-Answer forms should be scanned as black-and-white images with 200 - 300 dpi. Do not scan in
-greyscale! Supported file types are TIF, PNG and GIF and PDF.
+Even though Boost Union Med2 Child is a fully working theme, it looks and feels exactly the same as Boost Union itself (well, this is why we build Boost Union Med2 Child).
 
-If you have problems that not all pdf pages are recognized try to increase the memory limit of imagemagick which can be found in the policy.xml (in linux based systems in /etc/ImageMagick-${version}/policy.xml).
+To build your own grandchild theme of Boost with this boilerplate, you have to go further.
+
+### Renaming the grandchild theme (optional)
+
+If you want to run your grandchild theme with a different name than theme_boost_union_med2, for example theme_boost_union_foo, you have to take some actions:
+
+* In the whole codebase of Boost Union Med2 Child below /theme/boost_union_med2,
+  * search all occurrences of 'boost_union_med2' and replace them with 'boost_union_foo'
+  * search all occurrences of 'Boost Union Med2 Child' and replace them with 'Boost Union Foo'
+* In the language pack directory /theme/boost_union_med2/lang,
+  * rename the language pack file from en/theme_boost_union.php to en/theme_boost_foo.php
+* In the tests directory /theme/boost_union_med2/tests/behat,
+  * rename the Behat step definition files from behat_theme_boost_union_med2_behat_\*.php to behat_theme_boost_union_foo_behat_\*.php
+
+### Add your Boost Union Med2 Child features
+
+To add your local features to Boost Union Med2 Child, you can more or less follow all coding guidelines for Boost theme development which you find on the net. A good and official starting point is https://docs.moodle.org/dev/Themes.
+
+To help you with the first steps, we have added some markers to Boost Union Med2 Child's codebase at the places where you can add your own features. Just search for EXTENSION POINT and you will find the places where you can add your settings, language strings, SCSS code and so on.
+
+In addition to that, have a look at the 'Extension examples' section below.
+
+### Finishing your grandchild theme (optional)
+
+If you want to use Moodle plugin updates properly and especially if you intend to publish your grandchild theme, you set your plugin version information properly:
+
+* In the version file /theme/boost_union_med2/version.php,
+  * raise $plugin->version to a proper version of your choice (see https://docs.moodle.org/dev/Moodle_versions for an explanation how Moodle version numbers are composed)
+  * set $plugin->release to a release string of your choice (in Boost Union, we use release strings like 'v4.3-r1' which means 'First release for Moodle 4.3')
+  * set $plugin->requires to the version number of the miniumum Moodle core version which you would like to support (see https://moodledev.io/general/releases for the list of Moodle core versions)
+  * likewise, set $plugin->supported to an array with the range of Moodle core versions which you would like to support (for example, to support Moodle 4.3 only officially, set it to '[403, 403]')
+  * raise the entry for theme_boost_union in $plugin->dependencies to the version number of the Boost Union version which you tested your grandchild theme against, just to avoid any hickups if someone tries to combine your grandchild theme with a much older version of Boost Union
+
+As an orientation how all these settings should look like, you can compare /theme/boost_union_med2/version.php with /theme/boost_union/version.php, of course.
+
+### Congratulate yourself
+
+Now your grandchild theme should be ready to be used in production. Well done!
 
 
-Documentation
--------------
+Extension examples
+------------------
 
-You can find a cheat sheet for the plugin on the [AMC
-website](https://academic-moodle-cooperation.org/mod_offlinequiz/) and a video tutorial
-in German only in the [AMC YouTube Channel](https://www.youtube.com/c/AMCAcademicMoodleCooperation).
+### General
+
+Developing for Boost Union means to apply similar techniques for every new feature. In this section, we try to collect some of these techniques for you.
+
+### How to allow the admin to configure a SCSS variable with an admin setting
+
+In the [extension-setting-scss-variable](https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_med2/tree/extension-setting-scss-variable) branch, we prepared some example code which shows you how allow the admin to configure a SCSS variable with an admin setting and without fiddling with SCSS.
+
+In the example, we added a text admin setting into a dedicated admin settings tab. This setting is evaluated in lib.php where the pre-SCSS code is composed and where, based on the setting, a SCSS variable of Boost Core is overwritten. In this example, we chose to allow you to configure the $navbar-height variable. As a result, you can modify the height of the navbar just from within the admin setting if needed.
+
+The example code is completed by a Behat test which verifies now and forever that the admin setting is doing its job properly.
+
+### Modify a mustache template from Moodle core
+
+In the [extension-modify-mustache-template](https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_med2/tree/extension-modify-mustache-template) branch, we prepared some example code which shows you how to modify a mustache template from Moodle core in Boost Union Med2 Child.
+
+In the example, we copied the block.mustache template from Moodle core to Boost Union Med2 Child and modified in a way that the block controls are shown in the block footer now. The modified template will be used instantly as soon as Boost Union Med2 Child is the active theme.
+
+Of course, the example code is completed by a Behat test which verifies now and forever that the modified template is used in Boost Union Med2 Child.
+
+### Applying the example code branches
+
+As the example code is provided in a simple git branch, you can just merge the code into the master branch if you like and continue from there:
+
+```
+git checkout master
+git merge extension-setting-scss-variable
+```
+
+### Call for proposals
+
+If you have another good extension example for Boost Union Med2 Child, we would be grateful if you would contribute it!
+
+Just fork this repo, compose a branch with the extension example and create an issue in this repository to tell us the URL of your branch. We will then do our best to pick and publish your proposal.
 
 
-Bug Reports / Support
----------------------
+Plugin repositories
+-------------------
 
-We try our best to deliver bug-free plugins, but we cannot test the plugin for every platform,
-database, PHP and Moodle version. If you find any bug please report it on
-[GitHub](https://github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/issues). Please
-provide a detailed bug description, including the plugin and Moodle version and, if applicable, a
-screenshot.
+This boilerplate is not published in the Moodle plugins repository.
 
-You may also file a request for enhancement on GitHub. If we consider the request generally useful
-and if it can be implemented with reasonable effort we might implement it in a future version.
-
-You may also post general questions on the plugin on GitHub, but note that we do not have the
-resources to provide detailed support.
+The latest development version can be found on Github:
+https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_med2
 
 
-License
+Bug and problem reports / Support requests
+------------------------------------------
+
+This boilerplate is carefully developed and thoroughly tested, but bugs and problems can always appear.
+
+Please report bugs and problems on Github:
+https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_med2/issues
+
+We will do our best to solve your problems, but please note that due to limited resources we can't always provide per-case support.
+
+
+Feature proposals
+-----------------
+
+Due to limited resources, the functionality of this boilerplate is primarily implemented for our own local needs and published as-is to the community. We are aware that members of the community will have other needs and would love to see them solved by this boilerplate.
+
+Please issue feature proposals on Github:
+https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_med2/issues
+
+Please create pull requests on Github:
+https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_med2/pulls
+
+We are always interested to read about your feature proposals or even get a pull request from you, but please accept that we can handle your issues only as feature _proposals_ and not as feature _requests_.
+
+
+Maintainers
+-----------
+
+The boilerplate is maintained by\
+Moodle an Hochschulen e.V.
+
+
+Credits
 -------
 
-This plugin is free software: you can redistribute it and/or modify it under the terms of the GNU
-General Public License as published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
-
-The plugin is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License with Moodle. If not, see
-<http://www.gnu.org/licenses/>.
+This boilerplate is heavily inspired by the work of Daniel Poggenpohl from FernUniversität in Hagen who was the first to create a Boost Union Med2 Child boilerplate.
 
 
-Good luck and have fun!
+Copyright
+---------
+
+The copyright of this boilerplate is held by\
+Moodle an Hochschulen e.V.
+
+Individual copyrights of individual developers are tracked in PHPDoc comments and Git commits.
